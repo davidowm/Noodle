@@ -1,45 +1,47 @@
 * {
-	font-family: arial, sans-serif;
-	color: #545454;
+    font-family: arial, sans-serif;
+    color: #545454;
 }
 
 html,
 body {
-	margin: 0;
-	height: 100%;
+    margin: 0;
+    height: 100%;
 }
 
-.wrapper{
+.wrapper {
+
     display: flex;
     flex-direction: column;
     min-height: 100%;
+    
 }
 
-.wrapper.indexPage{
-	justify-content: center;
+.wrapper.indexPage {
+    justify-content: center;
 }
 
-.mainSection{
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+.mainSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.mainSection .searchContainer{
+.mainSection .searchContainer {
     margin-top: 20px;
     width: 100%;
 }
 
-
-.mainSection .searchContainer form{
+.mainSection .searchContainer form {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 .searchContainer .searchButton {
+
     color: #757575;
-    background-color: #D8D8D8;
+    background-color: #f5f5f5;
     border: none;
     height: 36px;
     width: 125px;
@@ -49,11 +51,12 @@ body {
     margin-top: 20px;
     cursor: pointer;
     outline: none;
+
 }
 
 .mainSection .searchContainer .searchBox {
-	border: none;
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.20);
+    border: none;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
     height: 44px;
     border-radius: 2px;
     outline: none;
@@ -65,11 +68,42 @@ body {
     color: #000;
 }
 
-.mainSection .logoContainer{
-	width: 300px;
-	text-align: center;
+.mainSection .logoContainer {
+    width: 220px;
+    text-align: center;
 }
 
-.logoContainer img{
-	width: 100%;
+.logoContainer img {
+    width: 100%;
 }
+
+.header {
+    background-color: #FAFAFA;
+    border-bottom: 1px solid #ebebeb;
+}
+
+.wrapper .headerContent {
+    display: flex;
+    align-items: center;
+}
+
+.headerContent .logoContainer {
+    width: 150px;
+    padding: 5px 20px;
+    box-sizing: border-box;
+}
+
+.headerContent .searchContainer {
+    flex: 1;
+}
+
+.headerContent .searchContainer form {
+    margin: 15px 0 28px 0;
+}
+
+
+
+
+
+
+
