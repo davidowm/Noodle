@@ -1,29 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<title>Welcome to Noodle</title>
+	<title>Welcome to Doodle</title>
+
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
 </head>
 <body>
-	<div class="wrapper indexPage">	
+
+	<div class="wrapper indexPage">
+	
+
 		<div class="mainSection">
+
 			<div class="logoContainer">
-				<img src="assets/images/logo.png">
+				<img src="assets/images/Logo.png">
 			</div>
 
+
 			<div class="searchContainer">
+
 				<form action="search.php" method="GET">
+
 					<input class="searchBox" type="text" name="term">
 					<input class="searchButton" type="submit" value="Search">
 
+
 				</form>
+
 			</div>
 
+
 		</div>
+
+
 	</div>
-
-
 
 </body>
 </html>
