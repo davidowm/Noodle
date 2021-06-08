@@ -28,6 +28,50 @@ $crawling = array();
 		return $src;
 	}
 
+	function getDetails($url) {
+		$parser = new DomDocumentParser($url);
+
+		$titleArray = $parser->getTitleTags();
+
+		$title = $titleArray->item(0)->nodeValue;
+
+		$title = str_replace("\n", "", $title);
+
+		if (sizeof($titleArray) == 0 || $titleArray-> item(0) == NULL) {
+			return;
+		}
+
+		if($title == "") {
+			return;
+		}
+
+	$description = "";
+	$keywords = "";
+
+	$metasArray = $parser->getMetatags();
+
+	foreach($metasArray as $meta) {
+
+		if($meta->getAttribute("name") == "description") {
+			$description = $meta->getAttribute("content");
+		}
+
+		if($meta->getAttribute("name") == "keywords") {
+			$keywords = $meta->getAttribute("content");
+		}
+
+		//echo $meta->getAttribute("name") . "<br>";
+		//echo $meta->getAttribute("content") . "<br>";
+
+
+	}
+
+	$description = str_replace("\n", "", $description);
+	$keywords = str_replace("\n", "", $keywords);
+
+	echo "URL: $url, Description: $description, keywords: $keywords<br>";
+
+	}
 
 	function FollowLinks($url) {
 		global $alreadyCrawled;
@@ -53,10 +97,11 @@ $crawling = array();
 				$alreadyCrawled[] = $href;
 				$crawling[] = $href;
 
-				//insert $href
+				getDetails($href);
 			}
+			else return;
 
-			echo $href . "<br>";
+			//echo $href . "<br>";
 
 			array_shift($crawling);
 
@@ -64,10 +109,11 @@ $crawling = array();
 				FollowLinks($site);
 			}
 
+
 		}
 	}
 
-$startUrl = "http://www.bbc.com";
+$startUrl = "http://www.cnn.com";
 FollowLinks($startUrl);
 
 ?>
