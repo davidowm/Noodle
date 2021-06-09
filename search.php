@@ -1,4 +1,5 @@
 <?php  
+INCLUDE("CONFIG.PHP");
 
 	if (isset($_GET["term"])) {
 		$term = $_GET["term"];
