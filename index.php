@@ -20,7 +20,7 @@
 		<div class="mainSection">
 
 			<div class="logoContainer">
-				<img src="assets/images/Logo.png">
+				<img src="assets/images/Logo.png" title="Moodle Logo" alt="Site Logo">
 			</div>
 
 
