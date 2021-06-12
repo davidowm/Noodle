@@ -11,6 +11,7 @@ INCLUDE("classes/SiteResultsProvider.php");
 	
 
 	$type = isset($_GET["type"]) ? $_GET["type"] : "sites";
+	$page = isset($_GET["page"]) ? $_GET["page"] : "1";
 
 	/* Code above is the same as code below...
 	if (isset($_GET["type"])) {
@@ -87,15 +88,78 @@ INCLUDE("classes/SiteResultsProvider.php");
 		<div class="mainResultsSection">
 			<?php  
 				$resultsProvider = new SiteResultsProvider($con);
+				$pageLimit = 20;
 				//echo $resultsProvider->getNumResults($term);
 				$numResults = $resultsProvider->getNumResults($term);
 				echo "<p class='resultsCount'>$numResults results found</p>";
 				
-				echo $resultsProvider->getresultsHtml(1,20,$term);
+				echo $resultsProvider->getresultsHtml($page,$pageLimit,$term);
 
 			?>
 		</div>
+		<div class="paginationContainer">
+
+			<div class="pageButtons">
+
+
+
+				<div class="pageNumberContainer">
+					<img src="assets/images/pageStart.png">
+				</div>
+
+				<?php
+
+
+				$currentPage = 1;
+				$pagesLeft = 10;
+
+				while($pagesLeft != 0) {
+
+					if ($currentPage == $page){
+						echo "<div class='pageNumberContainer'>
+								<img src='assets/images/pageSelected.png'>
+								<span class='pageNumber'>$currentPage</span>
+							</div>";
+
+					}
+					else {
+					echo "<div class='pageNumberContainer'>
+						<a href='search.php?term=$term&type=$type&page=$currentPage'>
+							<img src='assets/images/page.png'>
+							<span class='pageNumber'>$currentPage</span>
+							</a>
+						</div>";
+
+					}
+
+					$currentPage++;
+					$pagesLeft--;
+
+				}
+
+
+
+
+
+				?>
+
+				<div class="pageNumberContainer">
+					<img src="assets/images/pageEnd.png">
+				</div>
+
+
+
+			</div>
+
+
+
+
+		</div>
+
+
 	</div>
+
+
 
 </body>
 </html>
