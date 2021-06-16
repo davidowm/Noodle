@@ -1,5 +1,5 @@
 <?php
-class SiteResultsProvider {
+class ImageResultsProvider {
 
 	private $con;
 
@@ -10,10 +10,10 @@ class SiteResultsProvider {
 	public function getNumResults($term) {
 
 		$query = $this->con->prepare("SELECT COUNT(*) as total 
-										 FROM sites WHERE title LIKE :term 
-										 OR url LIKE :term 
-										 OR keywords LIKE :term 
-										 OR description LIKE :term");
+										 FROM images 
+										 WHERE (title LIKE :term 
+										 OR alt LIKE :term)
+										 AND broken = 0");
 
 		$searchTerm = "%". $term . "%";
 		$query->bindParam(":term", $searchTerm);
@@ -33,7 +33,7 @@ class SiteResultsProvider {
 		// etc...
 
 		$query = $this->con->prepare("SELECT * 
-										 FROM sites WHERE title LIKE :term 
+										 FROM images WHERE title LIKE :term 
 										 OR url LIKE :term 
 										 OR keywords LIKE :term 
 										 OR description LIKE :term
@@ -79,10 +79,5 @@ class SiteResultsProvider {
 		return $resultsHtml;
 	}
 
-	private function trimField($string, $characterLimit){
-		$dots = strlen($string) > $characterLimit ? "..." : "";
-		return substr($string, 0, $characterLimit) .$dots;
-
-	}
 }
 ?>

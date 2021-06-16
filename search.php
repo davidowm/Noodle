@@ -1,6 +1,7 @@
 <?php  
 INCLUDE("CONFIG.PHP");
 INCLUDE("classes/SiteResultsProvider.php");
+INCLUDE("classes/ImageResultsProvider.php");
 
 	if (isset($_GET["term"])) {
 		$term = $_GET["term"];
@@ -33,6 +34,8 @@ INCLUDE("classes/SiteResultsProvider.php");
 
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
 </head>
 <body>
 
@@ -54,7 +57,7 @@ INCLUDE("classes/SiteResultsProvider.php");
 					<form action="search.php" method="GET">
 
 						<div class="searchBarContainer">
-
+							<input type="hidden" name="type" value="<?php echo $type; ?>">
 							<input class="searchBox" type="text" name="term" value="<?php echo $term; ?>">
 							<button class="searchButton">
 								<img src="assets/images/icons/search.png">
@@ -87,13 +90,20 @@ INCLUDE("classes/SiteResultsProvider.php");
 
 		<div class="mainResultsSection">
 			<?php  
+				if ($type== "sites"){
 				$resultsProvider = new SiteResultsProvider($con);
-				$pageLimit = 20;
+				$pageSize = 20;
+				}
+				else{
+				$resultsProvider = new ImageResultsProvider($con);
+				$pageSize = 30;
+
+				}
 				//echo $resultsProvider->getNumResults($term);
 				$numResults = $resultsProvider->getNumResults($term);
 				echo "<p class='resultsCount'>$numResults results found</p>";
 				
-				echo $resultsProvider->getresultsHtml($page,$pageLimit,$term);
+				echo $resultsProvider->getresultsHtml($page,$pageSize,$term);
 
 			?>
 		</div>
@@ -109,11 +119,20 @@ INCLUDE("classes/SiteResultsProvider.php");
 
 				<?php
 
+				$pagesToShow = 10;
+				$numPages = ceil($numResults / $pageSize);
+				$pagesLeft = min($pagesToShow, $numPages);
+				$currentPage = $page - floor(($pagesToShow / 2));
 
-				$currentPage = 1;
-				$pagesLeft = 10;
+				if ($currentPage < 1) {
+					$currentPage = 1;
+				}
 
-				while($pagesLeft != 0) {
+				if ($currentPage + $pagesLeft > $numPages) {
+					$currentPage = $numPages  + 1 - $pagesLeft;
+				}
+
+				while($pagesLeft != 0 && $currentPage <= $numPages) {
 
 					if ($currentPage == $page){
 						echo "<div class='pageNumberContainer'>
@@ -159,7 +178,7 @@ INCLUDE("classes/SiteResultsProvider.php");
 
 	</div>
 
-
+	<script type="text/javascript" src="assets/js/script.js"></script>
 
 </body>
 </html>
