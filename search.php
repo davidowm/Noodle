@@ -36,6 +36,7 @@ INCLUDE("classes/ImageResultsProvider.php");
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 </head>
 <body>
 
@@ -90,6 +91,7 @@ INCLUDE("classes/ImageResultsProvider.php");
 
 		<div class="mainResultsSection">
 			<?php  
+				//echo $type;
 				if ($type== "sites"){
 				$resultsProvider = new SiteResultsProvider($con);
 				$pageSize = 20;
@@ -178,7 +180,10 @@ INCLUDE("classes/ImageResultsProvider.php");
 
 	</div>
 
-	<script type="text/javascript" src="assets/js/script.js"></script>
+	<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>	
+<script type="text/javascript" src="assets/js/script.js"></script>
 
 </body>
 </html>

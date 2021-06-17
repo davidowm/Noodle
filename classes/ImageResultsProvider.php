@@ -32,11 +32,13 @@ class ImageResultsProvider {
 		//page 2 : (2-1) * 20 = 20
 		// etc...
 
-		$query = $this->con->prepare("SELECT * 
-										 FROM images WHERE title LIKE :term 
-										 OR url LIKE :term 
-										 OR keywords LIKE :term 
-										 OR description LIKE :term
+
+
+		$query = $this->con->prepare("SELECT *
+										 FROM images 
+										 WHERE (title LIKE :term 
+										 OR alt LIKE :term)
+										 AND broken = 0
 										 ORDER BY clicks DESC
 										 LIMIT :fromLimit, :pageSize");
 
@@ -47,29 +49,42 @@ class ImageResultsProvider {
 		$query->execute();
 
 
-		$resultsHtml = "<div class='siteResults'>";
+		$resultsHtml = "<div class='imageResults'>";
 
+		$count = 0;
 
 		while($row = $query->fetch(PDO::FETCH_ASSOC)) {
+			$count++;
 			$id = $row["id"];
-			$url = $row["url"];
+			$imageUrl = $row["imageURL"];
+			$siteUrl = $row["siteURL"];
 			$title = $row["title"];
-			$description = $row["description"];
-			$title = $this->trimField($title,55);
-			$description = $this->trimField($description,230);
-			
-			$resultsHtml .= "<div class='resultContainer'>
+			$alt = $row["alt"];
 
-								<h3 class='title'>
-									<a class='result' href='$url' data-linkId='$id'>
-										$title
-									</a>
-								</h3>
-								<span class='url'>$url</span>
-								<span class='description'>$description</span>
+			if ($title){
+				$displayText = $title;
+			}else if($alt){
+				$displayText = $alt;
+			} else{
+				$displayText = $imageUrl;
+			}
+			
+			
+			$resultsHtml .= "<div class='gridItem image$count'>
+								<a href='$imageUrl' data-fancybox data-caption='$displayText' data-siteurl='$siteUrl'>
+									<script>
+
+										$(document).ready(function(){
+
+											loadImage(\"$imageUrl\", \"image$count\");
+
+											});
+
+									</script>
+									<span class='details'>$displayText</span>
+								</a>
 
 							</div>";
-
 
 		}
 
